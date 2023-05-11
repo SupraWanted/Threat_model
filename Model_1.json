@@ -1,0 +1,1021 @@
+{
+  "version": "2.0.2",
+  "summary": {
+    "title": "Threat_Model_monlift",
+    "owner": "Romaric Sonkoue",
+    "description": "Mon Lift est une plateforme de covoiturage au Canada disponible en version web et mobile . Elle permet aux conducteurs de proposer des trajets et aux passagers de réserver des places dans leur véhicule pour partager les frais de voyage. L'application offre également des fonctionnalités telles que la géolocalisation, la messagerie entre les utilisateurs et la notation des conducteurs et des passagers.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Monlift Diagram Threat",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.0.2",
+        "description": "Le Diagramme STRIDE est une représentation visuelle des menaces potentielles identifiées dans notre application Web Monlift à l'aide de la méthode STRIDE",
+        "cells": [
+          {
+            "position": {
+              "x": 79.99999999999999,
+              "y": 58.33333333333381
+            },
+            "size": {
+              "width": 187.50000000000003,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Browser (Client)"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "actor",
+            "zIndex": 1,
+            "id": "d5c01ce1-b273-4540-91e2-6c1511c6193b",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Browser (Client)",
+              "description": "Le client est l'utilisateur final de notre application web Monlift qui a pour but d'interagir avec le serveur d'application et la base de données.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": true,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 90,
+              "y": 510
+            },
+            "size": {
+              "width": 200,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Web Application Config - Admin"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "store",
+            "id": "f24560cf-6a4a-4b73-8d6c-7e2b0ce1fa6a",
+            "zIndex": 2,
+            "data": {
+              "type": "tm.Store",
+              "name": "Web Application Config - Admin",
+              "description": "Le web application config est un fichier de configuration qui permet de paramétrer différents aspects d'une application web.",
+              "outOfScope": false,
+              "reasonOutOfScope": "Cette partie ne doit pas être accessible au grand public et doit avoir des règles les d’authentification beaucoup strictes.  ",
+              "isALog": true,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "83b5969f-57ca-4056-97f7-1a8fe17ce40c",
+                  "title": "Credentials should be encrypted ",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "La configuration de l'application Web stocke les informations d'identification utilisées par l'application Web pour accéder à la file d'attente des messages. Ceux-ci pourraient être volés par un attaquant et utilisés pour lire des données confidentielles ou placer un message empoisonné dans la file d'attente.",
+                  "mitigation": "Les informations d'identification de Message Queue doivent être chiffrées.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 4,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 520,
+              "y": 500
+            },
+            "size": {
+              "width": 200,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Database"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "store",
+            "id": "8cd00b41-2aed-4592-a417-fa6a39cc0493",
+            "zIndex": 3,
+            "data": {
+              "type": "tm.Store",
+              "name": "Database",
+              "description": "C'est a ce niveau que sera stocker, organiser et gérer des données de manière structurée, afin de permettre leur accès et leur utilisation efficaces.\n\n",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "isALog": true,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "3326b608-fd8f-434d-941f-0bfd61cffbe4",
+                  "title": "Unauthorised Access",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Un attaquant pourrait effectuer un appel de requête sur la base de données",
+                  "mitigation": "Exiger que toutes les requêtes soient authentifiées.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                },
+                {
+                  "id": "593b395e-c424-46c9-b8c5-43bf1f1a7242",
+                  "title": "Credential theft",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Un attaquant pourrait obtenir les informations d'identification de la base de données et les utiliser pour effectuer des requêtes non autorisées.",
+                  "mitigation": "Utilisez un pare-feu pour limiter l'accès à la base de données à l'adresse IP du travailleur en arrière-plan uniquement.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 3,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 300,
+              "y": 230
+            },
+            "size": {
+              "width": 130,
+              "height": 130
+            },
+            "attrs": {
+              "text": {
+                "text": "Web Application"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "process",
+            "zIndex": 4,
+            "id": "8d39600f-8c5e-48b0-a144-cfd80e8d7665",
+            "data": {
+              "type": "tm.Process",
+              "name": "Web Application",
+              "description": "Cet partie est notre application logicielle proprement dit  qui est accessible via un navigateur web.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "",
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "d677199d-d66e-4a87-b43e-60ac2825357e",
+                  "title": "Perform regular penetration testing and security audits",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "description": "Les tests de pénétration et les audits de sécurité réguliers permettent de détecter les vulnérabilités de sécurité avant qu'elles ne soient exploitées par des attaquants",
+                  "mitigation": "Engager des experts en sécurité pour effectuer des tests de pénétration et des audits de sécurité",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 17,
+                  "score": ""
+                },
+                {
+                  "id": "74d2dcd2-0347-458b-aec2-7fd28e49ad29",
+                  "title": "Regularly update the software",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "",
+                  "mitigation": "Il est important de maintenir Monlift à jour en appliquant les mises à jour et correctifs de sécurité publiés par les fournisseurs des paquets et des logiciels.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 18,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 772,
+              "y": 58.33333333333371
+            },
+            "size": {
+              "width": 180,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Message queue"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "store",
+            "id": "3744e382-7765-4dbb-877a-b9035d1efecd",
+            "zIndex": 5,
+            "data": {
+              "type": "tm.Store",
+              "name": "Message queue",
+              "description": " Elle permet à notre application Monlift de communiquer de manière asynchrone en envoyant des messages à une file d'attente.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "isALog": true,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "6f907eae-b49a-4c8d-950f-dfb647677437",
+                  "title": "Message secrecy",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "description": "Le flux de données entre l'application Web et le travailleur d'arrière-plan n'est pas point à point et, par conséquent, le secret de bout en bout ne peut pas être fourni au niveau de la couche de transport. Les messages pourraient être lus par un attaquant au repos dans la file d'attente de messages.",
+                  "mitigation": "Utilisez le chiffrement au niveau des messages pour les données à haute sensibilité (par exemple, les jetons de sécurité) dans les messages.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 5,
+                  "score": ""
+                },
+                {
+                  "id": "1b1892d1-9e71-4726-87d9-7e31e43b8d1c",
+                  "title": "Message tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Les messages de la file d'attente pouvaient être falsifiés, ce qui entraînait un traitement incorrect par le travailleur en arrière-plan.",
+                  "mitigation": "Signez tous les messages de la file d'attente sur le serveur Web. Validez la signature du message au niveau du Background Worker et rejetez tout message avec une signature manquante ou invalide. Enregistrez tous les messages ayant échoué.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                },
+                {
+                  "id": "11914531-cf24-4477-8db3-6a03032a4ada",
+                  "title": "Fake messages could be placed on the queue",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Repudiation",
+                  "description": "Un attaquant pourrait placer un faux message dans la file d'attente, ce qui obligerait le Background Worker à effectuer un traitement incorrect.",
+                  "mitigation": "Limitez l'accès à la file d'attente aux adresses IP du serveur Web et du travailleur en arrière-plan.\n\nImplémentez l'authentification sur le point de terminaison de la file d'attente.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 7,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 850,
+              "y": 260
+            },
+            "size": {
+              "width": 140,
+              "height": 140
+            },
+            "attrs": {
+              "text": {
+                "text": "Background \nWorker Process"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "process",
+            "zIndex": 6,
+            "id": "da4cc8b6-9412-460a-b4d7-0e88519d1173",
+            "data": {
+              "type": "tm.Process",
+              "name": "Background \nWorker Process",
+              "description": "Ce processus s'exécutera en arrière-plan sans interférer avec l'exécution principale de l'application Monlift",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "High privileged",
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "b8f75231-a9cb-443d-8d58-bd8fb0d4bca1",
+                  "title": "Poison messages 1",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "Un attaquant pourrait générer un message malveillant que le Background Worker ne peut pas traiter.",
+                  "mitigation": "Implémentez une file d'attente de messages incohérents dans laquelle les messages sont placés après un nombre fixe de tentatives.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 8,
+                  "score": ""
+                },
+                {
+                  "id": "84c22213-ced6-4775-aed5-87f6381da714",
+                  "title": "Poison messages 2",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "Un attaquant pourrait générer un message malveillant que le Background Worker ne peut pas traiter.",
+                  "mitigation": "Validez le contenu de tous les messages, avant de les traiter. Rejetez tout message dont le contenu n'est pas valide et enregistrez le rejet. N'enregistrez pas le contenu malveillant - enregistrez plutôt une description de l'erreur.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 10,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": "5 2"
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Read web app config",
+              "description": "L'administrateur lire le ficher de configuration de l'application Monlift",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "e7b3c587-22cf-4b5d-b88c-c57cd471d053",
+            "labels": [
+              "Read web app config"
+            ],
+            "source": {
+              "x": 140,
+              "y": 510
+            },
+            "target": {
+              "cell": "8d39600f-8c5e-48b0-a144-cfd80e8d7665"
+            },
+            "vertices": [
+              {
+                "x": 160,
+                "y": 430
+              }
+            ]
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              ""
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "f817ab23-843b-42b8-9651-da404d91546d",
+            "source": {
+              "x": 50,
+              "y": 220
+            },
+            "target": {
+              "x": 480,
+              "y": 100
+            },
+            "vertices": [
+              {
+                "x": 310,
+                "y": 230
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Queries",
+              "description": "Le requete est transmis à  la base de données ",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "ed52546d-a131-459d-b108-428bc8013aa6",
+            "labels": [
+              "Queries"
+            ],
+            "source": {
+              "x": 430,
+              "y": 315
+            },
+            "target": {
+              "x": 630,
+              "y": 500
+            },
+            "vertices": [
+              {
+                "x": 610,
+                "y": 370
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Web App Query Results\n",
+              "description": "Le base de données transmet le  résultat de la requête a l'application Web Monlift",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "3b57920a-0dbe-4a6a-b032-7eb17ac5834f",
+            "labels": [
+              "Web App Query Results\n"
+            ],
+            "source": {
+              "cell": "8cd00b41-2aed-4592-a417-fa6a39cc0493"
+            },
+            "target": {
+              "cell": "8d39600f-8c5e-48b0-a144-cfd80e8d7665"
+            }
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              {
+                "attrs": {
+                  "text": {
+                    "text": ""
+                  }
+                }
+              }
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "2d08a81a-dff7-4a97-b226-5f27e98058b4",
+            "source": {
+              "x": 330,
+              "y": 530
+            },
+            "target": {
+              "x": 850,
+              "y": 500
+            },
+            "vertices": [
+              {
+                "x": 390,
+                "y": 420
+              },
+              {
+                "x": 510,
+                "y": 330
+              },
+              {
+                "x": 620,
+                "y": 310
+              },
+              {
+                "x": 720,
+                "y": 350
+              },
+              {
+                "x": 830,
+                "y": 430
+              }
+            ]
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              {
+                "attrs": {
+                  "text": {
+                    "text": ""
+                  }
+                }
+              }
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "0bfccbd6-aefb-412c-bccd-3872761c0659",
+            "source": {
+              "x": 500,
+              "y": 90
+            },
+            "target": {
+              "x": 960,
+              "y": 200
+            },
+            "vertices": [
+              {
+                "x": 690,
+                "y": 300
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Web request (HTTPS)",
+              "description": "Le client envoie des requêtes à l'application Monlift",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "443",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "a3e92609-1cc7-4b84-9e5f-a6d5684808a9",
+                  "title": "Data flow should use HTTP/S",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Ces demandes sont faites sur le public Internet et pourrait être intercepté par un attaquant.",
+                  "mitigation": "Les requêtes doivent nécessiter HTTP/S. Cela assurera la confidentialité et l'intégrité. HTTP ne doit pas être pris en charge.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 11,
+                  "score": ""
+                },
+                {
+                  "id": "43d76876-b069-46cf-91bc-02552d1d5101",
+                  "title": "Validate and filter user input",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Denial of service",
+                  "description": "Les attaques les plus courantes sur les applications web sont les injections de code, telles que les injections SQL et les injections de script entre autres.",
+                  "mitigation": "Valider toutes les entrées utilisateur et filtrer les caractères spéciaux pour éviter que les attaquants ne puissent exploiter des vulnérabilités de sécurité.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 13,
+                  "score": ""
+                },
+                {
+                  "id": "9d20946a-3b8b-4f8a-aad9-35f13c15601e",
+                  "title": "Limit access permissions",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Les attaquants peuvent utiliser l’accès non contrôlés pour initier des attaques sur l’application ",
+                  "mitigation": "Les autorisations d'accès doivent être limitées aux utilisateurs autorisés pour éviter les accès non autorisés et les fuites d'informations sensibles.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 14,
+                  "score": ""
+                },
+                {
+                  "id": "8c9502af-63ae-4223-90b8-8158e9d1baa8",
+                  "title": " Manage user sessions",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Les sessions utilisateur doivent être gérées de manière à éviter les attaques de vol de session.",
+                  "mitigation": "Les techniques courantes pour cela incluent l'utilisation de cookies sécurisés et de jetons de session avec des délais d'expiration courts.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 15,
+                  "score": ""
+                },
+                {
+                  "id": "487200bf-88d1-4ba9-85d9-1367beff9478",
+                  "title": "Multi-Factor Authentification",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "MFA est une méthode d'authentification qui utilise plusieurs facteurs pour vérifier l'identité d'un utilisateur.",
+                  "mitigation": "L'utilisateur doit généralement fournir son mot de passe ainsi que l'un des autres facteurs d'authentification. Par exemple, un utilisateur peut être invité à entrer son mot de passe, puis à saisir un code envoyé par SMS sur son téléphone portable.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 16,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "c811b45b-606c-4b8f-8a64-655e30158266",
+            "labels": [
+              "Web request (HTTPS)"
+            ],
+            "source": {
+              "x": 268,
+              "y": 130
+            },
+            "target": {
+              "x": 368,
+              "y": 230
+            },
+            "vertices": [
+              {
+                "x": 320,
+                "y": 130
+              },
+              {
+                "x": 368,
+                "y": 160
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Put message",
+              "description": "L'application transmet la requête a la fil d'attente",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "eced831d-1909-4f0b-bda2-c6e32fbf15d9",
+                  "title": "Data \u0000ow should use HTTP/S",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Ces demandes sont faites sur l'Internet public et pourraient être interceptées par un attaquant.",
+                  "mitigation": "Les requêtes doivent nécessiter HTTP/S. Cela assurera la confidentialité et l'intégrité. HTTP ne doit pas être pris en charge.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 19,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "c7e9cf7e-2cf5-4eab-835e-89eeb560bf2a",
+            "labels": [
+              "Put message"
+            ],
+            "source": {
+              "cell": "8d39600f-8c5e-48b0-a144-cfd80e8d7665"
+            },
+            "target": {
+              "cell": "3744e382-7765-4dbb-877a-b9035d1efecd"
+            },
+            "vertices": [
+              {
+                "x": 550,
+                "y": 180
+              },
+              {
+                "x": 620,
+                "y": 140
+              },
+              {
+                "x": 690,
+                "y": 110
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Message",
+              "description": "Le message est transmit au processus chargé de la gestion des process en arrière plan",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "a13b25dc-3555-4139-b73b-893ce695a61f",
+                  "title": "Data \u0000ow should use HTTP/S",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Ces demandes sont faites sur l'Internet public et pourraient être interceptées par un attaquant.",
+                  "mitigation": "Les requêtes doivent nécessiter HTTP/S. Cela assurera la confidentialité et l'intégrité. HTTP ne doit pas être pris en charge.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 20,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "485db90c-fe2c-475d-928a-699fb668ed62",
+            "labels": [
+              "Message"
+            ],
+            "source": {
+              "x": 790,
+              "y": 150
+            },
+            "target": {
+              "cell": "da4cc8b6-9412-460a-b4d7-0e88519d1173"
+            },
+            "vertices": [
+              {
+                "x": 810,
+                "y": 280
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Web reponse (HTTPS)",
+              "description": "L’application Monlift répond a la requête  du client",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "443",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "id": "2b8a99b1-08ad-4de8-8d6d-e55bd37ce0d7",
+                  "title": "Data \u0000flow should use HTTP/S",
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Ces réponses sont diffusées sur l'Internet public et pourraient être interceptées par un attaquant.",
+                  "mitigation": "Les requêtes doivent nécessiter HTTP/S. Cela assurera la confidentialité et l'intégrité. HTTP ne doit pas être pris en charge.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 22,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "54d7c81c-f419-415b-b58f-06e49627620e",
+            "labels": [
+              "Web reponse (HTTPS)"
+            ],
+            "source": {
+              "cell": "8d39600f-8c5e-48b0-a144-cfd80e8d7665"
+            },
+            "target": {
+              "cell": "d5c01ce1-b273-4540-91e2-6c1511c6193b"
+            },
+            "vertices": [
+              {
+                "x": 110,
+                "y": 190
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Worker Queries ",
+              "description": "La requête est envoyé  du process de travailleur en arrière-plan vers la base de données ",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "5d864268-671f-4c99-a85a-e6eb712cb06d",
+                  "title": "Man in the middle attack",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "description": "Un attaquant pourrait intercepter les requêtes de la base de données en transit et obtenir des informations sensibles, telles que les informations d'identification de la base de données, les paramètres de la requête ou les résultats de la requête.",
+                  "mitigation": "Appliquer une connexion chiffrée au serveur de base de données",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 21,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "580492fd-2170-4c89-894d-9efbe16b53e0",
+            "labels": [
+              "Worker Queries "
+            ],
+            "source": {
+              "cell": "da4cc8b6-9412-460a-b4d7-0e88519d1173"
+            },
+            "target": {
+              "cell": "8cd00b41-2aed-4592-a417-fa6a39cc0493"
+            },
+            "vertices": [
+              {
+                "x": 830,
+                "y": 360
+              },
+              {
+                "x": 750,
+                "y": 430
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "Mouhamad Diack",
+    "threatTop": 22
+  }
+}
